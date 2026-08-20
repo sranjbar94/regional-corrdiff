@@ -1,0 +1,31 @@
+hydra:
+  job:
+    chdir: false
+    name: g3_radiation_regression
+  run:
+    dir: ./output/${hydra:job.name}
+  searchpath:
+    - pkg://conf/base
+
+defaults:
+  - dataset: hrrr_mini
+  - model: regression
+  - model_size: mini
+  - training: ${model}
+
+dataset:
+  data_path: ./data/v4/randomly/train.nc
+  stats_path: ./data/v4/randomly/stats.json
+  output_variables: ['ssrd', 'strd']
+
+training:
+  hp:
+    training_duration: 5000000
+  io:
+    checkpoint_dir: checkpoints_g3_regression
+    print_progress_freq: 10000
+
+wandb:
+  mode: offline
+  results_dir: "./wandb"
+  watch_model: false

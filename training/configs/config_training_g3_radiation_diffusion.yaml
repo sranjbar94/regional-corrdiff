@@ -1,0 +1,32 @@
+hydra:
+  job:
+    chdir: false
+    name: g3_radiation_diffusion
+  run:
+    dir: ./output/${hydra:job.name}
+  searchpath:
+    - pkg://conf/base
+
+defaults:
+  - dataset: hrrr_mini
+  - model: diffusion
+  - model_size: mini
+  - training: ${model}
+
+dataset:
+  data_path: ./data/v4/randomly/train.nc
+  stats_path: ./data/v4/randomly/stats.json
+  output_variables: ['ssrd', 'strd']
+
+training:
+  hp:
+    training_duration: 25000000
+  io:
+    checkpoint_dir: checkpoints_g3_diffusion
+    print_progress_freq: 10000
+    regression_checkpoint_path: ???
+
+wandb:
+  mode: offline
+  results_dir: "./wandb"
+  watch_model: false

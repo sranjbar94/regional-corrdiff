@@ -1,0 +1,98 @@
+# =============================================================
+# CorrDiff Regional HRRR Dataset Pipeline — V5 (full CONUS, fixed bounds)
+# =============================================================
+dataset:
+  name: regional_hrrr_train_dataset_v5
+  version: "5.0"
+  description: >
+    CorrDiff training dataset for CONUS ocean pixels (V5: full CONUS coverage,
+    fixed domain bounds to include Pacific coast and Gulf of Mexico --
+    V2/V3/V4 domain bounds [lon_min=-120,lat_min=26] combined with the patch
+    buffer math excluded the Pacific coast and most of the Gulf; this V5
+    config widens bounds to genuinely cover all three coasts while staying
+    inside HRRR's native CONUS grid with a safety margin to avoid edge effects.
+    ERA5 (0.25 deg, 32x32 patches) -> HRRR (~3 km, 256x256 patches).
+    Ocean pixels only, 2017-2023 train period, random day+hour sampling.
+
+domain:
+  lon_min: -127.0
+  lon_max:  -66.0
+  lat_min:   22.0
+  lat_max:   50.0
+
+time:
+  date_start: "2017-01-01"
+  date_end:   "2023-12-31"
+  sampling: random
+
+patches:
+  era5_patch_size: 32        # 32×32 ERA5 pixels = ~8° × 8° footprint
+  hrrr_patch_size: 256       # 256×256 HRRR pixels = ~768km × 768km
+  era5_resolution: 0.25      # degrees
+
+ocean:
+  lsm_threshold:    0.2
+  min_ocean_frac:   0.6
+
+sampling:
+  n_samples:         100000   # Training: 100k samples
+  samples_per_ts:    25       # 25 patches per timestamp
+  random_seed:       42
+  allow_ts_repeats:  false
+
+era5:
+  single_level:
+    - "2m_temperature"
+    - "2m_dewpoint_temperature"
+    - "surface_pressure"
+    - "mean_sea_level_pressure"
+    - "10m_u_component_of_wind"
+    - "10m_v_component_of_wind"
+    - "surface_solar_radiation_downwards"
+    - "surface_thermal_radiation_downwards"
+    - "total_precipitation"
+    - "snowfall"
+    - "land_sea_mask"
+    - "total_column_water_vapour"
+
+  pressure_level:
+    variables: ["u_component_of_wind", "v_component_of_wind",
+                "geopotential", "temperature", "specific_humidity"]
+    levels: [1000, 850, 500, 250]
+
+hrrr:
+  output_vars:
+    - name: "TMP_2maboveground"
+      short: "2t"
+    - name: "UGRD_10maboveground"
+      short: "10u"
+    - name: "VGRD_10maboveground"
+      short: "10v"
+    - name: "APCP_surface"
+      short: "tp"
+    - name: "DSWRF_surface"
+      short: "ssrd"
+    - name: "DLWRF_surface"
+      short: "strd"
+    - name: "PRES_surface"
+      short: "sp"
+    - name: "SPFH_2maboveground"
+      short: "q"
+    - name: "WEASD_surface"
+      short: "sf"
+
+  s3_bucket: "noaa-hrrr-bdp-pds"
+  forecast_hour: 1
+
+storage:
+  era5_raw_dir:   "data/era5_raw"
+  output_dir:     "data/output"
+  output_filename: "regional_hrrr_train_dataset_v5_train.nc"
+  checkpoint_dir: "data/checkpoints_v5_train"
+  checkpoint_freq: 1000
+  compression_level: 4
+
+logging:
+  level: INFO
+  log_freq: 500
+  log_dir: "logs"

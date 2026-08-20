@@ -1,0 +1,31 @@
+hydra:
+  job:
+    chdir: false
+    name: g2_precip_regression
+  run:
+    dir: ./output/${hydra:job.name}
+  searchpath:
+    - pkg://conf/base
+
+defaults:
+  - dataset: hrrr_mini
+  - model: regression
+  - model_size: mini
+  - training: ${model}
+
+dataset:
+  data_path: ./data/v4/g2/training_g2_corrdiff.nc
+  stats_path: ./data/v4/g2/stats_g2_corrdiff.json
+  output_variables: ['tp', 'sf']
+
+training:
+  hp:
+    training_duration: 2000000
+  io:
+    checkpoint_dir: checkpoints_g2_corrdiff_regression
+    print_progress_freq: 10000
+
+wandb:
+  mode: offline
+  results_dir: "./wandb"
+  watch_model: false
