@@ -6,6 +6,12 @@ type: software
 authors:
   - family-names: "Ranjbar"
     given-names: "Sadegh"
+  - family-names: "Gloege"
+    given-names: "Lucas"
+  - family-names: "Planavsky"
+    given-names: "Noah"
+  - family-names: "Yankovsky"
+    given-names: "Elizabeth"
 
 repository-code: "https://github.com/sranjbar94/regional-corrdiff"
 
