@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Regional CorrDiff"
+message: "If you use this software, please cite this repository and the associated publication."
+type: software
+
+authors:
+  - family-names: "Ranjbar"
+    given-names: "Sadegh"
+
+repository-code: "https://github.com/sranjbar94/regional-corrdiff"
+
+abstract: >
+  Code for regional atmospheric downscaling using NVIDIA PhysicsNeMo
+  CorrDiff, including data preparation, model training, inference,
+  and evaluation workflows.
+
+keywords:
+  - CorrDiff
+  - atmospheric downscaling
+  - machine learning
+  - diffusion models
+  - regional weather
+  - ERA5
+  - HRRR
+  - PhysicsNeMo
+
+license: "MIT"
