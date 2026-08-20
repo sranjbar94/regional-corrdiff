@@ -1,6 +1,7 @@
 # Regional CorrDiff — Kilometer-Scale Atmospheric Downscaling for Coastal Ocean Areas
 
 **Sadegh Ranjbar, Lucas Gloege, Noah Planavsky, Elizabeth Yankovsky**
+
 Department of Earth and Planetary Sciences, Yale University
 Yale Center for Natural Carbon Capture, Yale University
 
@@ -60,7 +61,8 @@ cd figures && sbatch run_all_figures.sh
 
 ## Citation
 
-```bibtex
+```
+bibtex
 @article{ranjbar2025corrdiff,
   title   = {Kilometer-Scale Atmospheric Downscaling for Coastal Ocean Areas
              using Residual Corrective Diffusion Modeling},
