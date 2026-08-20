@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+*.so
+
+# Data files (too large for git; archived separately)
+*.nc
+*.zarr
+*.h5
+*.hdf5
+
+# Model checkpoints (archived on Zenodo)
+*.mdlus
+*.pt
+*.pth
+checkpoints/
+
+# Slurm logs
+slurm_*.log
+*.log
+
+# Output figures (generated from scripts)
+output/
+paper_figures*/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.env
